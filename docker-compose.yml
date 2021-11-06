@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+
+  web:
+    container_name: 'robofrieds'
+    build:
+      context: .
+      dockerfile: 'Dockerfile'
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '3001:3000'
+  
+  db:
+    image: 'postgres:14.0-alpine'
+    restart: 'always'
+    environment:
+      POSTGRES_PASSWORD: 'root'
+      
+# MIND A TRICK! 
+# If you're going to connect to a database through KNEX you therefore need to 
+# specify the host as the "db" service in a config function omitting the actual 
+# port of the database.
